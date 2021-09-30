@@ -22,4 +22,4 @@ AWS 上所有的 API 操作都可以被 CloudTrail 记录。本方案就是利�
 7. 当服务进入到可用状态后，触发 <code>deleteResource</code> 函数，删除新创建的服务（当服务未进入到可用状态时，不能被删除）；
 8. 服务删除后，通过 SNS 服务向管理员发送消息，告知有违规资源已经被删除。
 
-不同服务的调用参数不同，因此需要针对不同的服务使用不同的代码。本文中将给出针对 [ElastiCache (Redis)](Redis-CN.md) 和 Redshift 的控制代码作为示例。
+不同服务的调用参数不同，因此需要针对不同的服务使用不同的代码。本文中将给出针对 [ElastiCache (Redis)](Redis-CN.md) 和 [Redshift](Redshift-CN.md) 的控制代码作为示例。
