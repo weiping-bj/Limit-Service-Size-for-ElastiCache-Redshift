@@ -1,0 +1,11 @@
+{
+  "source": ["aws.redshift"],
+  "detail-type": ["AWS API Call via CloudTrail"],
+  "detail": {
+    "eventSource": ["redshift.amazonaws.com"],
+    "eventName": ["CreateCluster"],
+    "eventCode": [{
+      "exists": false
+    }]
+  }
+}

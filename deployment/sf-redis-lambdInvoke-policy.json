@@ -1,0 +1,29 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-01-nodeTypeCheck:*",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-02-nodeNumberCheck:*",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-03-statusCheck:*",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-04-deleteCluster:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-01-nodeTypeCheck",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-02-nodeNumberCheck",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-03-statusCheck",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-04-deleteCluster"
+            ]
+        }
+    ]
+}

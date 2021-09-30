@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:rsLimit-01-parameterCheck:*",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:rsLimit-02-statusCheck:*",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:rsLimit-03-deleteCluster:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:rsLimit-01-parameterCheck",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:rsLimit-02-statusCheck",
+                "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:rsLimit-03-deleteCluster"
+            ]
+        }
+    ]
+}

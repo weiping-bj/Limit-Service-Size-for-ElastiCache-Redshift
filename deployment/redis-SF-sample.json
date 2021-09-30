@@ -1,0 +1,94 @@
+{
+  "Comment": "Triggered by Eventbridge, Start to check creation paramters",
+  "StartAt": "NodeTypeCheck",
+  "States": {
+    "NodeTypeCheck": {
+      "Type": "Task",
+      "Resource": "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-01-nodeTypeCheck",
+      "InputPath": "$",
+      "ResultPath": "$.NodeTypeCheckData",
+      "Next": "NodeTypeChoice"
+    },
+    
+    "NodeTypeChoice": {
+      "Type" : "Choice",
+      "Choices": [
+        {
+          "Variable": "$.NodeTypeCheckData.checkCode",
+          "StringEquals": "ALLOWED",
+          "Next": "NodeNumCheck"
+        },
+        {
+          "Variable": "$.NodeTypeCheckData.checkCode",
+          "StringEquals": "BANNED",
+          "Next": "RedisStatusCheck"
+        }
+      ]
+    },
+    
+    "NodeNumCheck": {
+      "Type": "Task",
+      "Resource": "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-02-nodeNumberCheck",
+      "InputPath": "$.detail",
+      "ResultPath": "$.NodeNumCheckData",
+      "Next": "NodeNumChoice"
+    },
+
+    "NodeNumChoice": {
+      "Type" : "Choice",
+      "Choices": [
+        {
+          "Variable": "$.NodeNumCheckData.checkCode",
+          "StringEquals": "ALLOWED",
+          "Next": "AllowedRequest"
+        },
+        {
+          "Variable": "$.NodeNumCheckData.checkCode",
+          "StringEquals": "BANNED",
+          "Next": "RedisStatusCheck"
+        }
+      ]
+    },
+    
+    "RedisStatusCheck": {
+      "Type" : "Task",
+      "InputPath": "$.detail",
+      "ResultPath": "$.RedisStatusCheckData",
+      "Resource": "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-03-statusCheck",
+      "Next": "RedisStatusChoice"
+    },
+    
+    "RedisStatusChoice": {
+      "Type" : "Choice",
+      "Choices": [
+        {
+          "Variable": "$.RedisStatusCheckData.redisStatus",
+          "StringEquals": "available",
+          "Next": "DeleteRedis"
+        }
+      ],
+      "Default": "wait60s"
+    },
+    
+    "DeleteRedis": {
+      "Type": "Task",
+      "Resource": "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:redisLimit-04-deleteCluster",
+      "InputPath": "$.detail",
+      "End": true
+    },
+    
+    "AllowedRequest": {
+      "Type": "Pass",
+      "Result": "THis is an allowed request",
+      "End": true
+    },
+
+    "wait60s": {
+      "Type": "Wait",
+      "Seconds": 60,
+      "Next": "RedisStatusCheck"
+    }
+  }
+}
+
+

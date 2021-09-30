@@ -1,0 +1,11 @@
+{
+  "source": ["aws.elasticache"],
+  "detail-type": ["AWS API Call via CloudTrail"],
+  "detail": {
+    "eventSource": ["elasticache.amazonaws.com"],
+    "eventName": ["CreateReplicationGroup", "CreateCacheCluster"],
+    "eventCode": [{
+      "exists": false
+    }]
+  }
+}

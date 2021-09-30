@@ -1,0 +1,62 @@
+{
+  "Comment": "Triggered by Eventbridge, Start to check creation paramters",
+  "StartAt": "ParameterCheck",
+  "States": {
+    "ParameterCheck": {
+      "Type": "Task",
+      "Resource": "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:rsLimit-01-parameterCheck",
+      "InputPath": "$",
+      "ResultPath": "$.ParameterCheckData",
+      "Next": "ChoiceParameter"
+    },
+    "ChoiceParameter": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.ParameterCheckData.checkCode",
+          "StringEquals": "ALLOWED",
+          "Next": "LegalRequest"
+        },
+        {
+          "Variable": "$.ParameterCheckData.checkCode",
+          "StringEquals": "BANNED",
+          "Next": "StatusCheck"
+        }
+      ]
+    },
+    "LegalRequest": {
+      "Type": "Pass",
+      "Result": "THis is a legal request",
+      "End": true
+    },
+    "StatusCheck": {
+      "Type": "Task",
+      "InputPath": "$.ParameterCheckData.clusterID",
+      "ResultPath": "$.StatusCheckData",
+      "Resource": "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:rsLimit-02-statusCheck",
+      "Next": "ChoiceStatus"
+    },
+    "ChoiceStatus": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.StatusCheckData.status",
+          "StringEquals": "available",
+          "Next": "DeleteCluster"
+        }
+      ],
+      "Default": "wait60s"
+    },
+    "DeleteCluster": {
+      "Type": "Task",
+      "Resource": "arn:aws-cn:lambda:cn-north-1:<ACCOUNT_ID>:function:rsLimit-03-deleteCluster",
+      "InputPath": "$.detail",
+      "End": true
+    },
+    "wait60s": {
+      "Type": "Wait",
+      "Seconds": 60,
+      "Next": "StatusCheck"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "states:StartExecution"
+            ],
+            "Resource": [
+                "arn:aws-cn:states:cn-north-1:<ACCOUNT_ID>:stateMachine:redisLimit"
+            ]
+        }
+    ]
+}
