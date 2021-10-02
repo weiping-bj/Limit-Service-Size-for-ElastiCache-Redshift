@@ -136,7 +136,7 @@ aws lambda create-function --function-name redisLimit-01-nodeTypeCheck \
 --timeout 3 \
 --zip-file fileb://deployment/redisLimit-01-nodeTypeCheck.zip \
 --environment "Variables={ \
-REDIS_INSTANCE_TYPE=cache.r5.large}" \
+INTER_BUCKET=cache.r5.large}" \
 --region cn-north-1
 ```
 
@@ -184,7 +184,7 @@ aws lambda create-function --function-name redisLimit-04-deleteCluster \
 --timeout 3 \
 --zip-file fileb://deployment/redisLimit-04-deleteCluster.zip \
 --environment "Variables={ \
-TOPIC_ARN=$NOTIFY_TOPIC_ARN}" \
+TOPIC_ARN="$NOTIFY_TOPIC_ARN"}" \
 --region cn-north-1
 ```
 

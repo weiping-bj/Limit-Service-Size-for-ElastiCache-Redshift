@@ -166,7 +166,7 @@ aws lambda create-function --function-name rsLimit-03-deleteCluster \
 --timeout 3 \
 --zip-file fileb://deployment/rsLimit-03-deleteCluster.zip \
 --environment "Variables={ \
-TOPIC_ARN=$NOTIFY_TOPIC_ARN}" \
+TOPIC_ARN="$NOTIFY_TOPIC_ARN"}" \
 --region cn-north-1
 ```
 
